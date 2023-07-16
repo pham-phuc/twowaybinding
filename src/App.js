@@ -1,23 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState} from 'react';
+
+const courses = [
+  {
+    id : 1,
+    name:'HTML - CSS',
+  },
+  {
+    id : 2,
+    name : 'Javascript',
+  },
+  {
+    id:3,
+    name:'ReactJS',
+  }
+]
 
 function App() {
+
+  const [check,setCheck] = useState([]);
+  
+  const handleCheck = (id)=>{
+    setCheck(prev => {
+      const isCheck = check.includes(id);
+      if (isCheck){
+        return check.filter(item => item!==id)
+      }else{
+        return [...prev,id];
+      }
+    })
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {courses.map(course => (
+        <div key={course.id}>
+          <input type = 'checkbox'
+          checked = {check.includes(course.id)}  
+            onChange={()=>handleCheck(course.id)}
+          />
+          {course.name}
+        </div>
+      ))}
+      <button > Register </button>
     </div>
   );
 }
